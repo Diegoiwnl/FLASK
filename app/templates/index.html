@@ -20,17 +20,22 @@
         <th>Dirección</th>
         <th>Teléfono</th>
         <th>Usuario</th>
+        <th>Acciones:</th>
     </tr>
     <tbody>
         {% for usuario in personas %}
         <tr class="filas">
-            <td>{{ usuario[0] }}</td>
-            <td>{{ usuario[1]  }}</td>
+            <td>{{ usuario[0] }}</td> 
+            <td>{{ usuario[1] }}</td>
             <td>{{ usuario[2] }}</td>
             <td>{{ usuario[3] }}</td>
             <td>{{ usuario[4] }}</td>
             <td>{{ usuario[5] }}</td>
             <td>{{ usuario[6] }}</td>
+            <td>
+                <a href="{{url_for('editar_usuario',id=usuario[0])}}">Editar</a>
+                <a href="{{url_for('eliminar_usuario' ,id=usuario[0])}}">Eliminar</a>
+            </td>
         </tr>
         {% endfor %}
     </tbody>

@@ -3,9 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/styles.css')}}">
 </head>
 <body>
+    <h1>Editar Personas</h1>
+    <form method="POST" action="">
+        <label>Codigo: </label>
+        <input type="number" name="polpersona" value="{{ personas[0] }}" disabled><br>
+        <label>Nombre:</label>
+        <input type="text" name="nombrepersona" value="{{ personas[1] }}"><br>
+        <label>Apellido:</label>
+        <input type="text" name="apellidopersona" value="{{ personas[2] }}"><br>
+        <label>Email:</label>
+        <input type="email" name="emailpersona" value="{{ personas[3] }}"><br>
+        <label>Dirección:</label>
+        <input type="text" name="direccionpersona" value="{{ personas[4] }}"><br>
+        <label>Teléfono:</label>
+        <input type="number" name="telefonopersona" value="{{ personas[5] }}"><br>
+        <label>Usuario:</label>
+        <input type="text" name="usuariopersona" value="{{ personas[6] }}"disabled><br>
+        <label>Contraseña:</label>
+        <input type="password" name="contraseñapersona" value="{{ personas[7] }}"><br>
+        <input type="submit" value="Guardar Cambios">
     
+    </form>
+    
+
 </body>
 </html>
