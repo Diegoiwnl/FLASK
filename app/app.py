@@ -39,7 +39,8 @@ def login():
             return redirect(url_for('lista'))
         else:
             error = "Credenciales inválidas, por favor intentelo de nuevo"
-            return render_template('login.html', error)
+            return render_template('login.html', error=error)
+    return render_template('login.html')
 
 #Definir rutas
 
