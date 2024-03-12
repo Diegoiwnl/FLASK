@@ -37,7 +37,7 @@ def login():
         cursor.execute('SELECT usuarioper,contrasena FROM personas WHERE usuarioper  = %s',(username,))
         resultado = cursor.fetchone()
 
-        if resultado and encriptarcontraseña(password) == resultado[1]:
+        if resultado or encriptarcontraseña(password) == resultado['']:
             session['usuario'] = username
             return redirect(url_for('lista'))
         else:
