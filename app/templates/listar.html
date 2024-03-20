@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <table>
+            <tr>
+                <th>id_can</th>
+                <th>Titulo</th>
+                <th>Genero</th>
+                <th>Precio</th>
+                <th>Duracion</th>
+                <th>Lanzamiento</th>
+            </tr>
+                <tbody>
+                    {% for usuario in usuario %}
+                <tr>
+                    <td>{{usuario[0]}}</td>
+                    <td>{{usuario[1]}}</td>
+                    <td>{{usuario[2]}}</td>
+                    <td>{{usuario[3]}}</td>
+                    <td>{{usuario[4]}}</td>
+                    <td>{{usuario[5]}}</td>
+                    <td>{{usuario[6]}}</td>
+                    <td>
+                        <a href="{{ url_for('editar_cancion', id=cancion[0])}}">Editar</a>
+                        <a href="{{ url_for('eliminar_cancion', id=cancion[0]) }}">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            
+        </table>
+    
+    </div>
+</body>
+</html>

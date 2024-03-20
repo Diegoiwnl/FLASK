@@ -1,0 +1,73 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0; /* Fondo gris claro */
+    color: #333333; /* Texto negro */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 50px;
+}
+
+h1 {
+    font-family: 'Arial Black', sans-serif;
+    font-size: 42px;
+    color: #444444; /* Texto gris oscuro */
+}
+
+.formulario {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="password"] {
+    width: 300px;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #cccccc; /* Borde gris */
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="password"]:focus {
+    border-color: #0099ff; /* Borde azul cuando enfocado */
+}
+
+input[type="submit"] {
+    width: 200px;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #0099ff; /* Fondo azul */
+    color: #ffffff; /* Texto blanco */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 18px;
+}
+
+input[type="submit"]:hover {
+    background-color: #0077cc; /* Fondo azul más oscuro al pasar el mouse */
+}
+.rol{
+    width: 120px;
+}
