@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cancion.css') }}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="name">
+        <form action="/Registro" class="form" method="POST">
+        
+            <h1>Formulario De Registro De Canciones</h1>
+                <form>
+        <div class="contain">
+            <p>
+                <label class="select">Titulo</label>
+                <input class="input"  type="text"  maxlength="50" placeholder="Ingrese nombre" required name="titulo" utofocus required/>
+            </p>
+        </div>
+                       
+        <div class="contain">
+            <p>
+                <label class="select">Artista</label>
+                <input class="input" type="text"  maxlength="50" placeholder="Ingrese apellido" required name="artista" autofocus required/>
+            </p>
+        </div>
+        <div class="contain">
+            <p>
+                <label class="select">Genero</label>
+                <input class="input" type="text"  maxlength="50" placeholder="Ingrese e-mail" required name="genero" autofocus required/>
+            </p>
+        </div>
+        <div class="contain">
+            <p>
+                <label class="select">Precio</label>
+                <input class="input" type="number"  maxlength="50" placeholder="Ingrese el precio" required name="precio" autofocus required/>
+            </p>
+        </div>
+        <div class="contain">
+            <p>
+                <label class="select">Duracion</label>
+                <input class="input" type="text"  maxlength="50" placeholder="Ingrese la duración" required name="duracion" autofocus required/>
+            </p>
+        </div>
+        <div class="contain">
+            <p>
+                <label class="select">Lanzamiento</label>
+                <input class="input" type="date"  maxlength="50" placeholder="Ingrese la fecha de lanzamiento" required name="lanzamiento" autofocus required/>
+            </p>
+        </div>
+        <div class="contain">
+            <label for="img">Image URL:</label>
+            <input type="url" id="img" name="img" required><br><br>
+        </div>
+
+        <div class="contain">
+        <input type="submit" class="submitBtn" value="Registrar">
+        
+        </div>
+    </form>
+    </div>
+</form>
+</body>
+</html>
