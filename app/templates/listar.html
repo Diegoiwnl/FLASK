@@ -6,29 +6,29 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="container">
+    <div class="container" >
         <table>
             <tr>
-                <th>id_can</th>
                 <th>Titulo</th>
+                <th>Artista</th>
                 <th>Genero</th>
                 <th>Precio</th>
                 <th>Duracion</th>
                 <th>Lanzamiento</th>
+                <th>Imágen</th>
             </tr>
                 <tbody>
-                    {% for usuario in usuario %}
+                    {% for cancionuwu in cancion %}
                 <tr>
-                    <td>{{usuario[0]}}</td>
-                    <td>{{usuario[1]}}</td>
-                    <td>{{usuario[2]}}</td>
-                    <td>{{usuario[3]}}</td>
-                    <td>{{usuario[4]}}</td>
-                    <td>{{usuario[5]}}</td>
-                    <td>{{usuario[6]}}</td>
+                    <td>{{cancionuwu.Titulo }}</td>
+                    <td>{{cancionuwu.Artista }}</td>
+                    <td>{{cancionuwu.Genero }}</td>
+                    <td>{{cancionuwu.Precio }}</td>
+                    <td>{{cancionuwu.Duracion }}</td>
+                    <td>{{cancionuwu.Lanzamiento }}</td>
+                    <td><img src="data:image/jpeg;base64, {{ cancionuwu.Imagen }}" alt="No se encuentra imagen" width="100"></td>
                     <td>
-                        <a href="{{ url_for('editar_cancion', id=cancion[0])}}">Editar</a>
-                        <a href="{{ url_for('eliminar_cancion', id=cancion[0]) }}">Eliminar</a>
+                        
                     </td>
                 </tr>
                 {% endfor %}

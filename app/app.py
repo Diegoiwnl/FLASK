@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, request, url_for, flash, session
-import mysql.connector
+import mysql.connector, base64
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
@@ -9,7 +9,7 @@ db = mysql.connector.connect(
     host="localhost",
     user="root",
     password="",
-    database="Canciones2024"
+    database="Agenda2024"
 )
 
 cursor = db.cursor()
@@ -27,13 +27,13 @@ def login():
         password = request.form.get('txtcontrasena')
         
         cursor = db.cursor()
-        sql= "SELECT usuarioper, contrasena FROM personas WHERE usuarioper = %s"
+        sql= "SELECT usuarioper, contrasena, rol FROM personas WHERE usuarioper = %s"
         cursor.execute(sql,(username,))
         usuario = cursor.fetchone()
         
-        if usuario is not None and check_password_hash(usuario['contrasena'], password):
-            session['usuario'] = username ['usuariper']
-            session['roles']= usuario['rol']
+        if usuario is not None and check_password_hash(usuario[1], password):
+            session['usuario'] = username [0]
+            session['roles']= usuario[2]
 
             if usuario['rol'] == 'Administrador':
                 return redirect(url_for('lista'))
@@ -76,6 +76,7 @@ def Registrar_usuario():
         Usuario = request.form.get('usuario')
         Contrasena = request.form.get('contrasena')
         
+        
 
         Contrasenaencriptada = encripcontra(Contrasena)
 
@@ -85,7 +86,7 @@ def Registrar_usuario():
             flash('Usuario ya existe')
             return redirect(url_for('Registrar_usuario'))
 
-        cursor.execute("INSERT INTO personas(nombreper, apellidoper, rol, emailper, direccionper, telefonoper, usuarioper, contrasena) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", 
+        cursor.execute("INSERT INTO personas(nombreper, apellidoper, roles, emailper, direccionper, telefonoper, usuarioper, contrasena) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", 
                        (Nombres, Apellidos, Rol, Email, Direccion, Telefono, Usuario, Contrasenaencriptada))
         db.commit()
         flash('Usuario creado correctamente', 'success')
@@ -106,7 +107,7 @@ def editar_usuario(id):
         usuarioper = request.form.get('usuarioper')
         passper = request.form.get('passwordper')
 
-        sql = "UPDATE personas SET nombreper=%s, apellidoper=%s, emailper=%s, dirper=%s, telper=%s, usuarioper=%s contrasena=%s WHERE idper=%s"
+        sql = "UPDATE personas SET nombreper=%s, apellidoper=%s, emailper=%s, dirper=%s, telper=%s, usuarioper=%s, contrasena=%s WHERE idper=%s"
         cursor.execute(sql, (nombreper, apellidoper, emailper, dirper, telper, usuarioper, passper, id))
         db.commit()
         flash('Usuario actualizado correctamente', 'success')
@@ -137,6 +138,8 @@ def registro_cancion():
        Precio = request.form.get('precio')
        Duracion = request.form.get('duracion')
        Lanzamiento = request.form.get('lanzamiento')
+       Imagen = request.files['img']
+       Imagentrans = Imagen.read()
 
        cursor = db.cursor()
        cursor.execute(
@@ -146,8 +149,8 @@ def registro_cancion():
            flash('Canción ya existe')
            return redirect(url_for('registro_cancion'))
 
-       cursor.execute("INSERT INTO canciones(titulo, artista, genero, precio, duracion, lanzamiento) VALUES (%s, %s, %s, %s, %s, %s)",
-                      (Titulo, Artista, Genero, Precio, Duracion, Lanzamiento))
+       cursor.execute("INSERT INTO canciones(titulo, artista, genero, precio, duracion, lanzamiento, img) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                      (Titulo, Artista, Genero, Precio, Duracion, Lanzamiento, Imagentrans))
        db.commit()
 
        flash('Canción registrada correctamente', 'success')
@@ -155,7 +158,7 @@ def registro_cancion():
     return render_template("Registro.html")
 
 #enlazar actualizar
-@app.route('/actualizar/<int:id>',methods=['GET', 'POST'])
+@app.route('/actualizar_cancion/<int:id>',methods=['GET', 'POST'])
 def editar_cancion(id):
     cursor = db.cursor()
     if request.method == 'POST':
@@ -166,7 +169,7 @@ def editar_cancion(id):
         duracion = request.form.get('duracion')
         lanzamiento = request.form.get('lanzamiento')
 
-        sql = "UPDATE canciones set titulo=%s,artista=%s,genero=%s,precio=%s,duracion=%s,lanzamiento=%s, where id_can=%s"
+        sql = "UPDATE canciones set titulo=%s,artista=%s,genero=%s,precio=%s,duracion=%s,lanzamiento=%s where id_can=%s"
         cursor.execute(sql,(titulo,artista,genero,precio,duracion,lanzamiento,id)) 
         db.commit()
         
@@ -179,13 +182,50 @@ def editar_cancion(id):
 
         return render_template('actualizar.html', canciones=data[0])
 
-@app.route("/eliminar/<int:id>", methods=['GET'])
+@app.route("/eliminar_cancion/<int:id>", methods=['GET'])
 def eliminar_cancion(id):
 
     cursor = db.cursor()
     cursor.execute('DELETE FROM canciones WHERE id_cancion = %s', (id,))
     db.commit()
     return redirect(url_for('listar'))
+
+@app.route('/listar')
+def listar():
+
+    cursor=db.cursor()
+    cursor.execute("SELECT titulo, artista, genero, precio, duracion, lanzamiento, img from canciones")
+    cancionesguardar = cursor.fetchall()
+
+    print("Listando las canciones")
+
+    if cancionesguardar:
+        
+        listacanciones = []
+
+        for cancion in cancionesguardar:
+
+            print("SI entra")
+            Imagen = base64.b64encode(cancion[6]).decode('utf-8')
+            listacanciones.append({
+                'Titulo': cancion[0],
+                'Artista': cancion[1],
+                'Genero': cancion[2],
+                'Precio': cancion[3],
+                'Duracion': cancion[4],
+                'Lanzamiento': cancion[5],
+                'Imagen': Imagen 
+            })
+
+        return render_template('listar.html', cancion = listacanciones) 
+    
+    else:
+
+        return print("Canciones no encontradas. ");
+        
+#return print("Canciones no encontradas. ");
+
+    
 
 
 if __name__ == '__main__':
